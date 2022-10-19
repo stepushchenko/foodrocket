@@ -1,6 +1,10 @@
+# external imports
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+# internal imports
+import share
 
 
 # get arguments from commands line
@@ -12,30 +16,46 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="function")
 def driver(request):
 
-    # todo: надо получить из аргументов команды в терминале названия браузера (selenoid по умолчанию со свежим хромом)
-    # todo: надо прописать path до каждого из трех браузеров (chrome, safari, firefox на локальной машине)
-    # todo: надо сделать отсылку на удаленную машину с selenoide
-    # todo: надо сделать файл с конфигурациями селенойда для передачи данных в селенойд
+    """
+    Here browser will
+    start and quit
+    """
 
-    driver = None
+    # done: надо получить из аргументов команды в терминале названия браузера (selenoid по умолчанию со свежим хромом)
+    # done: надо прописать path до каждого из трех браузеров (chrome, safari, firefox на локальной машине)
+    # done: надо сделать отсылку на удаленную машину с selenoide
+    # done: надо сделать файл с конфигурациями селенойда для передачи данных в селенойд
+
+    options = Options()
     command_line_driver = request.config.getoption("driver")
 
     if command_line_driver == "chrome":
         # open local chrome
-        options = Options()
         driver = webdriver.Chrome(
-            executable_path='/usr/local/bin/chromedriver',
-            options=options,
+            service=Service('/usr/local/bin/chromedriver'),
+            options=options
         )
     elif command_line_driver == "safari":
         # open local safari
-        pass
+        driver = webdriver.Safari(
+            service=Service('/usr/bin/safaridriver')
+        )
     elif command_line_driver == "firefox":
         # open local firefox
-        pass
+        driver = webdriver.Firefox(
+            service=Service('/usr/local/bin/geckodriver')
+        )
     else:
-        # open selenoid
-        pass
+        # set capabilities
+        options.set_capability('browserName', share.selenoid_options[command_line_driver]['browserName'])
+        options.set_capability('browserVersion', share.selenoid_options[command_line_driver]['browserVersion'])
+        options.set_capability('platformName', share.selenoid_options[command_line_driver]['platformName'])
+        options.set_capability('selenoid:options', share.selenoid_options[command_line_driver]['selenoid:options'])
+        # open remote selenoid
+        driver = webdriver.Remote(
+            command_executor=f'http://{share.aws_test_server_ip}:4444/wd/hub',
+            options=options
+        )
 
     yield driver
 

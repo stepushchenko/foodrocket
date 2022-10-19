@@ -2,3 +2,4 @@ env
 .pytest_cache
 .idea
 __pycache__
+geckodriver.log
