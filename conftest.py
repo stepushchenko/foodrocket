@@ -1,4 +1,5 @@
 # external imports
+import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -7,7 +8,7 @@ from selenium.webdriver.chrome.service import Service
 import share
 
 
-# get arguments from commands line
+# save arguments from commands line
 def pytest_addoption(parser):
     parser.addoption('--driver', action='store', default="chrome",
                      help="Choose: chrome, firefox, safari, chrome106, firefox99, etc..")
@@ -27,10 +28,11 @@ def driver(request):
     # done: надо сделать файл с конфигурациями селенойда для передачи данных в селенойд
 
     options = Options()
-    command_line_driver = request.config.getoption("driver")
+    command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
     if command_line_driver == "chrome":
         # open local chrome
+        options.add_argument('window-size=1920,1080')
         driver = webdriver.Chrome(
             service=Service('/usr/local/bin/chromedriver'),
             options=options
@@ -59,4 +61,5 @@ def driver(request):
 
     yield driver
 
+    time.sleep(5)
     driver.quit()

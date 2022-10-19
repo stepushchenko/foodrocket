@@ -5,3 +5,4 @@
 1. Selenium
 2. Page Object Model 
 3. PyTest
+4. Selenoid

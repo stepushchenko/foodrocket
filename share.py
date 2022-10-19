@@ -7,10 +7,14 @@ from os.path import dirname, realpath
 #
 
 ROOT_DIR = dirname(realpath(__file__))
+
 aws_test_server_ip = '3.89.41.136'
 aws_access_key_id = ''
 aws_secret_access_key = ''
 aws_s3_bucket_title = ''
+
+driver_wait_in_sec = 20
+
 
 
 #
