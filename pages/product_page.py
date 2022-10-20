@@ -6,3 +6,4 @@ from pages.base_page import BasePage
 
 class ProductPage(BasePage):
     add_to_basket = (By.XPATH, "//div[contains(@class, 'addButton')]")
+    price_block = (By.CLASS_NAME, "src-pages-product-price")

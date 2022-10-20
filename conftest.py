@@ -65,7 +65,7 @@ def driver(request):
 
     yield driver
 
-    time.sleep(5)
+    time.sleep(1)
     driver.quit()
 
 

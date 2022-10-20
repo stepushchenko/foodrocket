@@ -5,4 +5,4 @@ from pages.base_page import BasePage
 
 
 class SearchPage(BasePage):
-    pass
+    title = (By.CLASS_NAME, "src-pages-search-title")

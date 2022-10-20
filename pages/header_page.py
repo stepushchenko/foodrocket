@@ -5,8 +5,10 @@ from pages.base_page import BasePage
 
 
 class HeaderPage(BasePage):
-    search_field = (By.XPATH, "//span[contains(text(),'Search')]")
-    sign_in_button = (By.XPATH, "//span[contains(text(), 'Sign in')]/following::div")
+    search_field = (By.XPATH, "//div[contains(@class, 'src-comp-mainHeader-searchDesktopWrapper')]")
+    search_input = (By.ID, "Input__search")
+    search_submit_button = (By.XPATH, "//div[contains(@class, 'src-comp-mainHeader-submit')]")
+    sign_in_button = (By.XPATH, "//div[contains(@class, 'src-comp-mainHeader-loginButton')]")
 
 
 

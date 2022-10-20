@@ -14,7 +14,7 @@ aws_access_key_id = ''
 aws_secret_access_key = ''
 aws_s3_bucket_title = ''
 
-driver_wait_in_sec = 20
+driver_wait_in_sec = 10
 
 
 #
