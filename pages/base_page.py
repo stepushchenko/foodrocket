@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 import share
 
 
-class Base:
+class BasePage:
     def __init__(self, driver, env):
         self.driver = driver
         self.frontend_url = env['frontend_url']
