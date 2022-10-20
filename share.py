@@ -44,3 +44,20 @@ selenoid_options = {
 
     }
 }
+
+
+#
+# ENV
+#
+
+
+env_options = {
+    'prod': {
+        'frontend_url': 'https://www.foodrocket.me/',
+        'backend_url': '',
+    },
+    'test': {
+        'frontend_url': '',
+        'backend_url': '',
+    },
+}

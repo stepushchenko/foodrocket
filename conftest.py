@@ -4,6 +4,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+
 # internal imports
 import share
 
@@ -11,7 +12,10 @@ import share
 # save arguments from commands line
 def pytest_addoption(parser):
     parser.addoption('--driver', action='store', default="chrome",
-                     help="Choose: chrome, firefox, safari, chrome106, firefox99, etc..")
+                     help="Choose: chrome, firefox, safari, chrome106, firefox99, etc ...")
+
+    parser.addoption('--env', action='store', default="prod",
+                     help="Choose: test, prod, etc ...")
 
 
 @pytest.fixture(scope="function")
@@ -63,3 +67,8 @@ def driver(request):
 
     time.sleep(5)
     driver.quit()
+
+
+@pytest.fixture(scope="function")
+def env(request):
+    return share.env_options[request.config.getoption("env")]

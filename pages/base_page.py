@@ -1,4 +1,5 @@
 # external imports
+import pytest
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -9,11 +10,12 @@ import share
 
 
 class Base:
-    def __init__(self, driver):
+    def __init__(self, driver, env):
         self.driver = driver
+        self.frontend_url = env['frontend_url']
 
     def open(self, url):
-        self.driver.get(url)
+        self.driver.get(f"{self.frontend_url}{url}")
 
     def click(self, selector):
         self.wait_element(selector).click()
