@@ -1,6 +1,6 @@
 # external imports
 import pytest
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, TimeoutException, InvalidArgumentException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -36,7 +36,7 @@ class BasePage:
         try:
             self.driver.find_element(*selector)
         except NoSuchElementException:
-            assert False, f"Can not find {selector}"
+            raise NoSuchElementException(f'Can not find {selector}')
 
     def is_text_present(self, selector, text: str):
         result = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
