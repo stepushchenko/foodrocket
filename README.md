@@ -17,6 +17,7 @@
 pytest --setup-show  # show fixtures work result
 pytest -s  # allow to see 'print()' statements in the console
 pytest -v  # to get more information in output
+pytest -m marker_title  # run only selected marker tests
 pytest --driver=chrome  # to select driver, which will run tests
 pytest --env=prod  # to select env, which will be used in tests
 ```
@@ -45,4 +46,23 @@ class TestClassTitle:
     @pytest.mark.parametrize("parameter1, parameter2", [('parameter1_value1', 'parameter2_value1'), ('parameter1_value2', 'parameter2_value2')])
     def test_function_title(self, parameter1, parameter2):
         return parameter1 + parameter2
+```
+
+### Marked tests
+
+```python
+import pytest
+
+class TestClassTitle:
+    
+    # change 'mark_title' to your mark title
+    # add 'mark_title' to the 'pytest.ini' file
+    @pytest.mark.mark_title
+    def test_function_title(self):
+        pass
+```
+
+Run only marked tests
+```bash
+pytest -m mark_title
 ```
