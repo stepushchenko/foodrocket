@@ -19,27 +19,36 @@ class BasePage:
         self.driver.get(f"{self.frontend_url}{url}")
 
     def click(self, selector):
-        self.wait_element_located(selector).click()
+        self.wait_element_visible(selector).click()
 
     def enter_value(self, selector, value):
-        self.wait_element_located(selector).send_keys(value)
+        self.wait_element_visible(selector).send_keys(value)
 
-    def wait_element_located(self, selector):
+    #
+    # WAITS
+    #
+
+    def wait_element_visible(self, selector):
         element = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
+            EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
+            message=f'Can not find {selector}',  # if no element, print a message
+        )
+        # self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
+        return element
+
+    #
+    # ASSERTS
+    #
+
+    def is_element_present(self, selector):
+        WebDriverWait(self.driver, share.driver_wait_in_sec).until(
             EC.presence_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )
-        self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
-        return element
 
-    def is_element_present(self, selector):
-        try:
-            self.driver.find_element(*selector)
-        except NoSuchElementException:
-            raise NoSuchElementException(f'Can not find {selector}')
-
-    def is_text_present(self, selector, text: str):
-        result = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
-            EC.text_to_be_present_in_element(selector, text),  # return true, if text presents
-            message=f"Can not find '{text}' in {selector}"  # if no text, print a message
-        )
+    def is_text_present(self, selector, expected_result: str):
+        actual_result = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
+            EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
+            message=f'Can not find {selector}',  # if no element, print a message
+        ).text
+        assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
