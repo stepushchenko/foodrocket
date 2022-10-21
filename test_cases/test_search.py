@@ -12,10 +12,11 @@ from pages.sign_in_page import SignInPage
 
 
 # done: сделать возможность параметризованного запуска теста
-
+# done: маркировать тесты как "debugging" для более быстрого запуска только отлаживаемых тестов
 
 class TestSearch:
 
+    @pytest.mark.debugging
     def test_search_field_can_be_pressed(self, driver, env):
         browser = BasePage(driver, env)
         browser.open('')

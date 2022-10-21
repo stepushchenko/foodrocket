@@ -10,9 +10,8 @@ from pages.product_page import ProductPage
 from pages.sign_in_page import SignInPage
 
 
-class TestBasket:
-    pass
+class TestCart:
 
-    # def test_add_product_to_basket(self, driver, env):
-    #     browser = Base(driver, env)
-    #     pass
+    def test_add_product_to_basket(self, driver, env):
+        browser = BasePage(driver, env)
+        pass
