@@ -1,15 +1,11 @@
-# Food Rocket company
+# Food Rocket Project
 
 ### Inside
-
 1. Selenium
 2. Page Object Model 
-3. PyTest - framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries.
-4. Selenoid - launch different browsers in parallel
-
-### Other libraries 
-1. ipdb - python debugging
-
+3. PyTest
+4. Selenoid 
+5. ipdb (debugging)
 
 ### Pytest configuration
 
