@@ -38,16 +38,26 @@ class BasePage:
             element.send_keys(Keys.CONTROL + "a")
             element.send_keys(Keys.DELETE)
 
+    def press_keyboard_numbers(self, value, click=None):
+        if click is not None:
+            self.click(click)
+        action = ActionChains(self.driver)
+        for num in value:
+            numpad = 'NUMPAD' + num
+            action.send_keys(Keys.__str__(numpad))
+        action.perform()
+
     #
     # WAITS
     #
 
-    def wait_element_visible(self, selector):
+    def wait_element_visible(self, selector, focus=False):
         element = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
             EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )
-        # self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
+        if focus:
+            self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
         return element
 
     #
