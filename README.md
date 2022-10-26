@@ -57,8 +57,3 @@ class TestClassTitle:
     def test_function_title(self):
         pass
 ```
-
-Run only marked tests
-```bash
-pytest -m mark_title
-```
