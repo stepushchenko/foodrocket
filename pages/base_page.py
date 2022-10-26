@@ -1,5 +1,6 @@
 # external imports
 import pytest
+import platform
 from selenium.common import NoSuchElementException, TimeoutException, InvalidArgumentException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -28,6 +29,15 @@ class BasePage:
     def enter_value(self, selector, value):
         self.wait_element_visible(selector).send_keys(value)
 
+    def clear_value(self, selector):
+        element = self.wait_element_visible(selector)
+        if platform.system() == 'Darwin':
+            element.send_keys(Keys.COMMAND + "a")
+            element.send_keys(Keys.DELETE)
+        else:
+            element.send_keys(Keys.CONTROL + "a")
+            element.send_keys(Keys.DELETE)
+
     #
     # WAITS
     #
@@ -51,8 +61,9 @@ class BasePage:
         )
 
     def is_text_present(self, selector, expected_result: str):
-        actual_result = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
-            EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
-            message=f'Can not find {selector}',  # if no element, print a message
-        ).text
+        actual_result = self.wait_element_visible(selector).text
+        assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
+
+    def is_value_present(self, selector, expected_result: str):
+        actual_result = self.wait_element_visible(selector).get_attribute('value')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"

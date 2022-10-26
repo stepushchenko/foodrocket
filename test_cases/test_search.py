@@ -19,7 +19,6 @@ class TestSearch:
         browser.click(HeaderPage.search_field)
         browser.is_element_present(HeaderPage.search_submit_button)
 
-    @pytest.mark.debugging
     def test_search_results_can_be_displayed(self, driver, env):
         browser = BasePage(driver, env)
         browser.open('')
