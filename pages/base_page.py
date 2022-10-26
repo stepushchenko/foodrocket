@@ -1,9 +1,6 @@
 # external imports
-import pytest
 import platform
-from selenium.common import NoSuchElementException, TimeoutException, InvalidArgumentException
 from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -38,9 +35,7 @@ class BasePage:
             element.send_keys(Keys.CONTROL + "a")
             element.send_keys(Keys.DELETE)
 
-    def press_keyboard_numbers(self, value, click=None):
-        if click is not None:
-            self.click(click)
+    def press_keyboard_numbers(self, value):
         action = ActionChains(self.driver)
         for num in value:
             numpad = 'NUMPAD' + num
@@ -76,4 +71,8 @@ class BasePage:
 
     def is_value_present(self, selector, expected_result: str):
         actual_result = self.wait_element_visible(selector).get_attribute('value')
+        assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
+
+    def is_href_present(self, selector, expected_result: str):
+        actual_result = self.wait_element_visible(selector).get_attribute('href')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
