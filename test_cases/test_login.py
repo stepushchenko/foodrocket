@@ -10,9 +10,6 @@ from pages.product_page import ProductPage
 from pages.sign_in_page import SignInPage
 
 
-# done: сделать возможность параметризованного запуска теста
-
-
 class TestLogin:
 
     def test_sign_in_button_can_be_pressed(self, driver, env):

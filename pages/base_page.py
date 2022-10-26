@@ -15,6 +15,10 @@ class BasePage:
         self.driver = driver
         self.frontend_url = env['frontend_url']
 
+    #
+    # STEPS
+    #
+
     def open(self, url):
         self.driver.get(f"{self.frontend_url}{url}")
 
@@ -42,7 +46,7 @@ class BasePage:
 
     def is_element_present(self, selector):
         WebDriverWait(self.driver, share.driver_wait_in_sec).until(
-            EC.presence_of_element_located(selector),  # return element, if it exists in the DOM
+            EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )
 

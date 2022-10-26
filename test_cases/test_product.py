@@ -12,7 +12,6 @@ from pages.sign_in_page import SignInPage
 
 
 class TestProduct:
-    pass
 
     def test_product_page_can_be_opened(self, driver, env):
         browser = BasePage(driver, env)

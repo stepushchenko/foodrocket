@@ -26,11 +26,6 @@ def driver(request):
     start and quit
     """
 
-    # done: надо получить из аргументов команды в терминале названия браузера (selenoid по умолчанию со свежим хромом)
-    # done: надо прописать path до каждого из трех браузеров (chrome, safari, firefox на локальной машине)
-    # done: надо сделать отсылку на удаленную машину с selenoide
-    # done: надо сделать файл с конфигурациями селенойда для передачи данных в селенойд
-
     options = Options()
     command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
