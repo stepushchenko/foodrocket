@@ -16,7 +16,6 @@ path_to_chrome_driver: /usr/local/bin/chromedriver
 path_to_safari_driver: /usr/bin/safaridriver
 path_to_firefox_driver: /usr/local/bin/geckodriver
 
-
 # ENV
 env_options:
   prod:
@@ -47,3 +46,4 @@ selenoid_options:
       enableVideo: !!bool False
       videoName: chrome104.mp4
 ...
+
