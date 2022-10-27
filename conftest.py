@@ -2,7 +2,12 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.safari.service import Service as SafariService
+
 
 # internal imports
 import share
@@ -29,21 +34,18 @@ def driver(request):
     command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
     if command_line_driver == "chrome":
-        # open local chrome
         options.add_argument('window-size=1920,1080')
         driver = webdriver.Chrome(
-            service=Service(share.configuration['path_to_chrome_driver']),
+            service=ChromeService(ChromeDriverManager().install()),
             options=options
         )
     elif command_line_driver == "safari":
-        # open local safari
         driver = webdriver.Safari(
-            service=Service(share.configuration['path_to_safari_driver'])
+            service=SafariService(share.configuration['path_to_safari_driver'])
         )
     elif command_line_driver == "firefox":
-        # open local firefox
         driver = webdriver.Firefox(
-            service=Service(share.configuration['path_to_firefox_driver'])
+            service=FirefoxService(GeckoDriverManager().install())
         )
     else:
         # set capabilities
