@@ -54,7 +54,7 @@ def driver(request):
         options.set_capability('selenoid:options', share.configuration['selenoid_options'][command_line_driver]['selenoid:options'])
         # open remote selenoid
         driver = webdriver.Remote(
-            command_executor=f"http://3.89.41.136:4444/wd/hub/",
+            command_executor=f"http://{share.configuration['aws_test_server_ip']}:4444/wd/hub",
             options=options
         )
 
