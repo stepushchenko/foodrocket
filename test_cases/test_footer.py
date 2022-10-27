@@ -14,7 +14,7 @@ class TestFooter:
     def test_link_to_contact_us_button(self, driver, env):
         browser = BasePage(driver, env)
         browser.open('')
-        browser.is_href_present(FooterPage.contact_us_button, share.data['contact_us_email'])  # todo: move parameter value to the configuration.yaml
+        browser.is_href_present(FooterPage.contact_us_button, share.data['contact_us_email'])
 
     def test_link_to_app_store_button(self, driver, env):
         browser = BasePage(driver, env)

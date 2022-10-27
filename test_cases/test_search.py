@@ -3,6 +3,7 @@ import ipdb
 import pytest
 
 # internal imports
+import share
 from pages.base_page import BasePage
 from pages.header_page import HeaderPage
 from pages.search_page import SearchPage
@@ -20,6 +21,6 @@ class TestSearch:
         browser = BasePage(driver, env)
         browser.open('')
         browser.click(HeaderPage.search_field)
-        browser.enter_value(HeaderPage.search_input, 'Coffee')
+        browser.enter_value(HeaderPage.search_input, share.data['search_titles'][0])
         browser.click(HeaderPage.search_submit_button)
-        browser.is_text_present(SearchPage.title, 'Search results for “Coffee”')
+        browser.is_text_present(SearchPage.title, f"Search results for “{share.data['search_titles'][0]}”")
