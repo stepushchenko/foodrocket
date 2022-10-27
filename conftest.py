@@ -32,18 +32,18 @@ def driver(request):
         # open local chrome
         options.add_argument('window-size=1920,1080')
         driver = webdriver.Chrome(
-            service=Service('/usr/local/bin/chromedriver'),
+            service=Service(share.configuration['path_to_chrome_driver']),
             options=options
         )
     elif command_line_driver == "safari":
         # open local safari
         driver = webdriver.Safari(
-            service=Service('/usr/bin/safaridriver')
+            service=Service(share.configuration['path_to_safari_driver'])
         )
     elif command_line_driver == "firefox":
         # open local firefox
         driver = webdriver.Firefox(
-            service=Service('/usr/local/bin/geckodriver')
+            service=Service(share.configuration['path_to_firefox_driver'])
         )
     else:
         # set capabilities
