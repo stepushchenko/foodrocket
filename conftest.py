@@ -23,7 +23,7 @@ def pytest_addoption(parser):
 
 def _run_chrome_driver():
     options = Options()
-    options.add_argument('window-size=1920,1080')
+    options.add_argument(share.configuration['window_size'])
     return webdriver.Chrome(
         service=ChromeService(ChromeDriverManager().install()),
         options=options

@@ -8,6 +8,9 @@ aws_s3_bucket_title:
 # SELENIUM WAITS
 driver_wait_in_sec: !!int 10
 
+# SELENIUM DRIVERS options
+window_size: !!str window-size=1920,1080
+
 # PATHs
 path_to_chrome_driver: /usr/local/bin/chromedriver
 path_to_safari_driver: /usr/bin/safaridriver
