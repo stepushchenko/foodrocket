@@ -1,0 +1,38 @@
+---
+# AWS
+aws_test_server_ip: 3.89.41.136
+aws_access_key_id:
+aws_secret_access_key:
+aws_s3_bucket_title:
+
+# SELENIUM WAITS
+driver_wait_in_sec: !!int 10
+
+# ENV
+env_options:
+  prod:
+    frontend_url: https://www.foodrocket.me/
+    backend_url:
+  test:
+    frontend_url:
+    backend_url:
+
+# SELENOID
+selenoid_options:
+  chrome106:
+    browserName: chrome
+    browserVersion: !!str 106.0
+    platformName: linux
+    selenoid:options:
+      enableVNC: !!bool False
+      enableVideo: !!bool False
+      videoName: chrome106.mp4
+  chrome104:
+    browserName: chrome
+    browserVersion: !!str 104.0
+    platformName: linux
+    selenoid:options:
+      enableVNC: !!bool False
+      enableVideo: !!bool False
+      videoName: chrome104.mp4
+...

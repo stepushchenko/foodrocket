@@ -57,3 +57,31 @@ class TestClassTitle:
     def test_function_title(self):
         pass
 ```
+
+### YAML
+
+```yaml
+---
+string: This is a string.  # this is comment
+command: "sh interface | include Queueing strategy:"
+
+long string: 
+    Это очень длинная строка,
+    которую сложно читать в однострочной записи,
+    так как она вылезает за пределы окна.
+
+list title:
+    - string element
+    - 2
+    - True
+    - False
+    - next list title:
+        - element 1
+        - element 2
+
+dictionary title:
+  name: !!str Ivan Katkov  # str type
+  job: Tech writer
+  skill: !!int 0  # int type
+...
+```

@@ -47,7 +47,7 @@ class BasePage:
     #
 
     def wait_element_visible(self, selector, focus=False):
-        element = WebDriverWait(self.driver, share.driver_wait_in_sec).until(
+        element = WebDriverWait(self.driver, share.configuration['driver_wait_in_sec']).until(
             EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )
@@ -60,7 +60,7 @@ class BasePage:
     #
 
     def is_element_present(self, selector):
-        WebDriverWait(self.driver, share.driver_wait_in_sec).until(
+        WebDriverWait(self.driver, share.configuration['driver_wait_in_sec']).until(
             EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )

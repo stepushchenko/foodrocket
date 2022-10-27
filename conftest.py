@@ -48,22 +48,21 @@ def driver(request):
         )
     else:
         # set capabilities
-        options.set_capability('browserName', share.selenoid_options[command_line_driver]['browserName'])
-        options.set_capability('browserVersion', share.selenoid_options[command_line_driver]['browserVersion'])
-        options.set_capability('platformName', share.selenoid_options[command_line_driver]['platformName'])
-        options.set_capability('selenoid:options', share.selenoid_options[command_line_driver]['selenoid:options'])
+        options.set_capability('browserName', share.configuration['selenoid_options'][command_line_driver]['browserName'])
+        options.set_capability('browserVersion', share.configuration['selenoid_options'][command_line_driver]['browserVersion'])
+        options.set_capability('platformName', share.configuration['selenoid_options'][command_line_driver]['platformName'])
+        options.set_capability('selenoid:options', share.configuration['selenoid_options'][command_line_driver]['selenoid:options'])
         # open remote selenoid
         driver = webdriver.Remote(
-            command_executor=f'http://{share.aws_test_server_ip}:4444/wd/hub',
+            command_executor=f"http://3.89.41.136:4444/wd/hub/",
             options=options
         )
 
     yield driver
 
-    time.sleep(1)
     driver.quit()
 
 
 @pytest.fixture(scope="function")
 def env(request):
-    return share.env_options[request.config.getoption("env")]
+    return share.configuration['env_options'][request.config.getoption("env")]
