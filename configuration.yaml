@@ -24,6 +24,8 @@ env_options:
     backend_url:
 
 # SELENOID
+selenoid_supported_drivers:
+  - chrome104
 selenoid_options:
   chrome106:
     browserName: chrome

@@ -7,9 +7,9 @@ from pages.base_page import BasePage
 from pages.footer_page import FooterPage
 
 
-@pytest.mark.debugging
 class TestFooter:
 
+    @pytest.mark.debugging
     def test_link_to_contact_us_button(self, driver, env):
         browser = BasePage(driver, env)
         browser.open('')

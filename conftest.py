@@ -22,42 +22,58 @@ def pytest_addoption(parser):
                      help="Choose: test, prod, etc ...")
 
 
+def run_chrome_driver():
+    options = Options()
+    options.add_argument('window-size=1920,1080')
+    return webdriver.Chrome(
+        service=ChromeService(ChromeDriverManager().install()),
+        options=options
+    )
+
+
+def run_safari_driver():
+    return webdriver.Safari(
+        service=SafariService(share.configuration['path_to_safari_driver'])
+    )
+
+
+def run_firefox_driver():
+    return webdriver.Firefox(
+        service=FirefoxService(GeckoDriverManager().install())
+    )
+
+
+def run_selenoid_driver(command_line_driver):
+    # set capabilities
+    options = Options()
+    options.set_capability('browserName', share.configuration['selenoid_options'][command_line_driver]['browserName'])
+    options.set_capability('browserVersion',
+                           share.configuration['selenoid_options'][command_line_driver]['browserVersion'])
+    options.set_capability('platformName', share.configuration['selenoid_options'][command_line_driver]['platformName'])
+    options.set_capability('selenoid:options',
+                           share.configuration['selenoid_options'][command_line_driver]['selenoid:options'])
+    # open remote selenoid
+    return webdriver.Remote(
+        command_executor=f"http://{share.configuration['aws_test_server_ip']}:4444/wd/hub",
+        options=options
+    )
+
+
 @pytest.fixture(scope="function")
 def driver(request):
 
-    """
-    Here browser will
-    start and quit
-    """
-
-    options = Options()
     command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
     if command_line_driver == "chrome":
-        options.add_argument('window-size=1920,1080')
-        driver = webdriver.Chrome(
-            service=ChromeService(ChromeDriverManager().install()),
-            options=options
-        )
+        driver = run_chrome_driver()
     elif command_line_driver == "safari":
-        driver = webdriver.Safari(
-            service=SafariService(share.configuration['path_to_safari_driver'])
-        )
+        driver = run_safari_driver()
     elif command_line_driver == "firefox":
-        driver = webdriver.Firefox(
-            service=FirefoxService(GeckoDriverManager().install())
-        )
+        driver = run_firefox_driver()
+    elif command_line_driver in share.configuration['selenoid_supported_drivers']:
+        driver = run_selenoid_driver(command_line_driver)
     else:
-        # set capabilities
-        options.set_capability('browserName', share.configuration['selenoid_options'][command_line_driver]['browserName'])
-        options.set_capability('browserVersion', share.configuration['selenoid_options'][command_line_driver]['browserVersion'])
-        options.set_capability('platformName', share.configuration['selenoid_options'][command_line_driver]['platformName'])
-        options.set_capability('selenoid:options', share.configuration['selenoid_options'][command_line_driver]['selenoid:options'])
-        # open remote selenoid
-        driver = webdriver.Remote(
-            command_executor=f"http://{share.configuration['aws_test_server_ip']}:4444/wd/hub",
-            options=options
-        )
+        raise ValueError(command_line_driver)
 
     yield driver
 
