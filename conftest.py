@@ -8,7 +8,6 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.safari.service import Service as SafariService
 
-
 # internal imports
 import share
 
@@ -22,7 +21,7 @@ def pytest_addoption(parser):
                      help="Choose: test, prod, etc ...")
 
 
-def run_chrome_driver():
+def _run_chrome_driver():
     options = Options()
     options.add_argument('window-size=1920,1080')
     return webdriver.Chrome(
@@ -31,19 +30,19 @@ def run_chrome_driver():
     )
 
 
-def run_safari_driver():
+def _run_safari_driver():
     return webdriver.Safari(
         service=SafariService(share.configuration['path_to_safari_driver'])
     )
 
 
-def run_firefox_driver():
+def _run_firefox_driver():
     return webdriver.Firefox(
         service=FirefoxService(GeckoDriverManager().install())
     )
 
 
-def run_selenoid_driver(command_line_driver):
+def _run_selenoid_driver(command_line_driver):
     # set capabilities
     options = Options()
     options.set_capability('browserName', share.configuration['selenoid_options'][command_line_driver]['browserName'])
@@ -59,19 +58,19 @@ def run_selenoid_driver(command_line_driver):
     )
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def driver(request):
 
     command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
     if command_line_driver == "chrome":
-        driver = run_chrome_driver()
+        driver = _run_chrome_driver()
     elif command_line_driver == "safari":
-        driver = run_safari_driver()
+        driver = _run_safari_driver()
     elif command_line_driver == "firefox":
-        driver = run_firefox_driver()
+        driver = _run_firefox_driver()
     elif command_line_driver in share.configuration['selenoid_supported_drivers']:
-        driver = run_selenoid_driver(command_line_driver)
+        driver = _run_selenoid_driver(command_line_driver)
     else:
         raise ValueError(command_line_driver)
 
@@ -80,6 +79,6 @@ def driver(request):
     driver.quit()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def env(request):
     return share.configuration['env_options'][request.config.getoption("env")]

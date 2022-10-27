@@ -21,13 +21,13 @@ class BasePage:
         self.driver.get(f"{self.frontend_url}{url}")
 
     def click(self, selector):
-        self.wait_element_visible(selector).click()
+        self.is_element_present(selector).click()
 
     def enter_value(self, selector, value):
-        self.wait_element_visible(selector).send_keys(value)
+        self.is_element_present(selector).send_keys(value)
 
     def clear_value(self, selector):
-        element = self.wait_element_visible(selector)
+        element = self.is_element_present(selector)
         if platform.system() == 'Darwin':
             element.send_keys(Keys.COMMAND + "a")
             element.send_keys(Keys.DELETE)
@@ -43,10 +43,10 @@ class BasePage:
         action.perform()
 
     #
-    # WAITS
+    # ASSERTS
     #
 
-    def wait_element_visible(self, selector, focus=False):
+    def is_element_present(self, selector, focus=False):
         element = WebDriverWait(self.driver, share.configuration['driver_wait_in_sec']).until(
             EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
@@ -55,24 +55,14 @@ class BasePage:
             self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
         return element
 
-    #
-    # ASSERTS
-    #
-
-    def is_element_present(self, selector):
-        WebDriverWait(self.driver, share.configuration['driver_wait_in_sec']).until(
-            EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
-            message=f'Can not find {selector}',  # if no element, print a message
-        )
-
     def is_text_present(self, selector, expected_result: str):
-        actual_result = self.wait_element_visible(selector).text
+        actual_result = self.is_element_present(selector).text
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
 
     def is_value_present(self, selector, expected_result: str):
-        actual_result = self.wait_element_visible(selector).get_attribute('value')
+        actual_result = self.is_element_present(selector).get_attribute('value')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
 
     def is_href_present(self, selector, expected_result: str):
-        actual_result = self.wait_element_visible(selector).get_attribute('href')
+        actual_result = self.is_element_present(selector).get_attribute('href')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
