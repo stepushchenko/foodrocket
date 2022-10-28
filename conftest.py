@@ -42,7 +42,7 @@ def _run_firefox_driver():
     )
 
 
-def _run_selenoid_driver(command_line_driver):
+def _run_selenoid_driver(command_line_driver: str):
     # set capabilities
     options = Options()
     options.set_capability('browserName', share.configuration['selenoid_options'][command_line_driver]['browserName'])
@@ -60,6 +60,10 @@ def _run_selenoid_driver(command_line_driver):
 
 @pytest.fixture()
 def driver(request):
+    """
+    :param request:
+    :return: Selenium Webdriver object
+    """
 
     command_line_driver = request.config.getoption("driver")  # read driver name from command line
 
@@ -69,7 +73,7 @@ def driver(request):
         driver = _run_safari_driver()
     elif command_line_driver == "firefox":
         driver = _run_firefox_driver()
-    elif command_line_driver in share.configuration['selenoid_supported_drivers']:
+    elif command_line_driver in share.configuration['selenoid_options'].keys():
         driver = _run_selenoid_driver(command_line_driver)
     else:
         raise ValueError(command_line_driver)
@@ -81,4 +85,10 @@ def driver(request):
 
 @pytest.fixture()
 def env(request):
-    return share.configuration['env_options'][request.config.getoption("env")]
+    """
+    :param request:
+    :return: selected env data (type dict)
+    """
+    selected_env_title = request.config.getoption("env")
+    selected_env_data = share.configuration['env_options'][selected_env_title]
+    return selected_env_data
