@@ -42,27 +42,28 @@ class BasePage:
             action.send_keys(Keys.__str__(numpad))
         action.perform()
 
+    def focus(self, element):
+        self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
+
     #
     # ASSERTS
     #
 
-    def is_element_present(self, selector, focus=False):
+    def is_element_present(self, selector: str):
         element = WebDriverWait(self.driver, share.configuration['driver_wait_in_sec']).until(
             EC.visibility_of_element_located(selector),  # return element, if it exists in the DOM
             message=f'Can not find {selector}',  # if no element, print a message
         )
-        if focus:
-            self.driver.execute_script("return arguments[0].scrollIntoView(true);", element)  # focus on the element
         return element
 
-    def is_text_present(self, selector, expected_result: str):
+    def is_text_present(self, selector: str, expected_result: str):
         actual_result = self.is_element_present(selector).text
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
 
-    def is_value_present(self, selector, expected_result: str):
+    def is_value_present(self, selector: str, expected_result: str):
         actual_result = self.is_element_present(selector).get_attribute('value')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
 
-    def is_href_present(self, selector, expected_result: str):
+    def is_href_present(self, selector: str, expected_result: str):
         actual_result = self.is_element_present(selector).get_attribute('href')
         assert actual_result == expected_result, f"Actual result: {actual_result}, expected result: {expected_result}"
