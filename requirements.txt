@@ -9,7 +9,6 @@ decorator==5.1.1
 exceptiongroup==1.0.0rc9
 executing==1.1.1
 h11==0.14.0
-idna==3.4
 iniconfig==1.1.1
 ipdb==0.13.9
 ipython==8.5.0
