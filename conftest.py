@@ -14,9 +14,11 @@ import share
 
 # save arguments from commands line
 def pytest_addoption(parser):
+    # read driver name from command line
     parser.addoption('--driver', action='store', default="chrome",
                      help="Choose: chrome, firefox, safari, chrome106, firefox99, etc ...")
 
+    # read env name from command line
     parser.addoption('--env', action='store', default="prod",
                      help="Choose: test, prod, etc ...")
 
@@ -65,7 +67,7 @@ def driver(request):
     :return: Selenium Webdriver object
     """
 
-    command_line_driver = request.config.getoption("driver")  # read driver name from command line
+    command_line_driver = request.config.getoption("driver")
 
     if command_line_driver == "chrome":
         driver = _run_chrome_driver()
