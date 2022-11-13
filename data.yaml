@@ -1,13 +1,50 @@
 ---
-# TESTS DATA
-contact_us_email: mailto:support@foodrocket.me
-app_store_download_link: https://apps.apple.com/app/food-rocket-grocery-delivery/id1552202489
-google_play_market_download_link: https://play.google.com/store/apps/details?id=me.foodrocket.app
+# TEST DATA
 
-phone_with_code: +79003296989
-phone_without_code: !!str 9003296989
+# Zip Code Field
+valid_zip_code: !!str 00001
+unmatched_zip_code: !!str 00010
+unknown_zip_code: !!str 0001
 
-search_titles:
-  - Coffee
+# Zip Code Caption
+zip_code_caption_color: !!str rgba(193, 204, 249, 1)
+zip_code_warning_caption_color: !!str rgba(250, 140, 22, 1)
+
+# Fullname
+valid_fullname: Name Surname
+
+# Invalid Fullname Caption
+invalid_fullname_caption:
+  - !!python/tuple ['Name', 'Your full name should contain both first and last name']
+  - !!python/tuple ['Name Surname!', 'Full name can consist only of latin letters and dashes']
+  - !!python/tuple ['Имя Фамилия', 'Full name can consist only of latin letters and dashes']
+
+# Get First Name From Fullname
+first_name_in_fullname:
+  - !!python/tuple ['Name Surname', 'Name']
+  - !!python/tuple ['Abraham the Second', 'Abraham']
+  - !!python/tuple ['Abraham-David Mirro', 'Abraham-David']
+
+# Email
+valid_email: !!str email@gmail.com
+valid_email_domain: !!str gmail.com
+
+# Phone Numbers
+valid_phone_number_without_code: !!str 0000000000
+
+# Orange Messages
+orange_message_for_internal_owner:
+  Our installers require the homeowner or someone authorized to make 
+  property changes be present during the estimate. 
+  Would you like to continue?
+orange_message_for_internal_mobile_home:
+  Unfortunately, our installers do not work with mobile, modular or 
+  manufactured homes. Would you still like to continue?
+orange_message_for_internal_existing_tub:
+  Unfortunately, our installers can only replace an existing 
+  bathtub or shower. Would you still like to continue?
+orange_message_for_internal_insurance_coverage:
+  Unfortunately, our installers do not currently work with 
+  insurance or VA claims. Would you still like to continue?
 
 ...

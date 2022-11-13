@@ -3,7 +3,7 @@
 aws_test_server_ip: 3.89.41.136
 
 # SELENIUM WAITS
-driver_wait_in_sec: !!int 10
+driver_wait_in_sec: !!int 5
 
 # SELENIUM DRIVERS options
 window_size: !!str window-size=1920,1080
@@ -16,7 +16,7 @@ path_to_firefox_driver: /usr/local/bin/geckodriver
 # ENV
 env_options:
   prod:
-    frontend_url: https://www.foodrocket.me/
+    frontend_url: https://hb-beta.stage.sirenltd.dev/
     backend_url:
   test:
     frontend_url:

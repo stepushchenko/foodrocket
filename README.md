@@ -1,11 +1,11 @@
-# Food Rocket Project
+# HomeBuddy Test Project
 
 ### Inside
-1. Selenium
-2. Page Object Model 
-3. PyTest
-4. Selenoid 
-5. ipdb (debugging)
+1. Selenium 
+2. PyTest 
+3. Selenoid 
+4. ipdb (debugging)
+5. Page Object Model 
 
 ### Pytest configuration
 
